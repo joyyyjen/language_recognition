@@ -13,10 +13,13 @@ def spliter(text,unimap,bimap):
         bimap.append(text[i:i+2])
     return bimap,unimap
 def frequency(text):
+    freq_int = Counter()
     freq = Counter()
     for i in text:
         freq[i] += 1
-    return freq
+        if freq[i] not in freq_int: freq_int[freq[i]] = 1
+        else: freq_int[freq[i]] += 1 
+    return freq,freq_int
 
 def trainProc(string):
     list_1 = list()
@@ -42,10 +45,12 @@ def trainProc(string):
     s = list(set(list_uni))
     s2 = list(set(list_bi))
 
-    freq_1 = frequency(list_uni)
-    for x in s: freq_1[x] += 1
-    freq_2 = frequency(list_bi)
-    for x in s2: freq_2[x] += 1 
+    freq_1,freq_int = frequency(list_uni)
+    for x in s: 
+        freq_1[x]  = (freq_1[x]+1)*freq_int[(freq_1[x]+1)]/freq_int[freq_1[x]]
+    freq_2,freq_int2 = frequency(list_bi)
+    for x in s2: 
+        freq_2[x]  = (freq_2[x]+1)*freq_int2[(freq_2[x]+1)]/(freq_int2[freq_2[x]])
     return freq_2,freq_1
 
 def possibilities(j,i,freq_2,freq_1):
@@ -106,10 +111,9 @@ if __name__ =="__main__":
     mapI,freq_1I = trainProc(string)
  
 #---- TEST PROCESS:
-    #tiest1 = "Pourquoi est - ce arrivé - ? "
+    test1 = "We know , and we have stated as much in very many resolutions indeed , including specifically during the last plenary part - session of last year , that this is not solely a legal case and that it is wrong for Alexander Nikitin to be accused of criminal activity and treason because of our involvement as the beneficiaries of his findings ."
     test3 = "Although , as you will have seen , the dreaded - 'millennium bug' - failed to materialise , still the people in a number of countries suffered a series of natural disasters that truly were dreadful ."
-    testP = ["Pourquoi est - ce arrivé - ? ","Pourquoi - ?"]
-#    testP = ["Resumption of the session","Perché non esistono istruzioni da seguire in caso di incendio ?","If the House agrees , I shall do as Mr Evans has suggested .","Des décisions existent qui s ' opposent à une telle taxe ."]
+    testP = ["Resumption of the session","Perché non esistono istruzioni da seguire in caso di incendio ?","If the House agrees , I shall do as Mr Evans has suggested .","Des décisions existent qui s ' opposent à une telle taxe ."]
 # ---- WHAT LANGAUGE AM I?
     """
     for line in testP:    
@@ -125,18 +129,18 @@ if __name__ =="__main__":
             ans = max(possE,possF,possI)
             if ans == possE: print("***English")
             elif ans == possF: print("***French")
-            elif ans == possI: print("***Italian")
+            elif ans == possI: print("***Italian-win")
         print(str(possE)+" "+str(possF)+" "+str(possI))
      """
 
 # ---- PROVIDE TEST
-           
+       
     #print("---TEST TEST FILE---")
     sentences = list()
     line_n=0
     text = codecs.open("LangId.test",'r', encoding='cp1252')
     string = text.read().splitlines()
-    output = open("wordLangId.out",'w')
+    output = open("wordLangId2.out",'w')
     for line in string:
         if len(line) > 100: line=line[0:100]
         line_n = line_n + 1
@@ -149,4 +153,4 @@ if __name__ =="__main__":
             if ans == possE: output.write(str(line_n)+" English\n")
             elif ans == possF: output.write(str(line_n)+" French\n")
             elif ans == possI: output.write(str(line_n)+" Italian\n")
-    
+   
