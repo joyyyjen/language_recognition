@@ -1,5 +1,5 @@
 #!/usr/local/bin/python3
-#Author: Joy Jen, nedid: yjen2
+#Author: Joy Jen, netid: yjen2
 import sys
 import codecs
 from collections import Counter
