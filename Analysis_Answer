@@ -1,0 +1,22 @@
+1) Question 1: Comparing my output file with the solution file, the output answer matches 99.6% of the solution file. The letter model can be implemented without any kind of smoothing and still have above 85% correctness. However, it will cause some sentence to be unidentifiable, because there are some sentences' possibility is zero for all three language. Some letter sequence are not in bigram because it’s proper noun. So it would be better to implemented even the basic add-one smoothing.
+2) Question 2:Comparing my output file with the solution file, the output answer matches 100% of the solution file. If I change the test file to one of the training test, it would return 99% correctness from around 2900 sentences. 
+3) Analysis:  
+
+The advantages for the model in #1 is that:
+(1) the size of the bigram matrixes are much smaller compare to those in #2. For a single language, the matrix is around 100*100. 
+(2) The bigram matrixes are not as sparse as those in question #2
+The disadvantages for the model #1 is that: 
+(1)	This language model might not work for short strings, because the possible combination of latin alphabet is limited and our training language are similar. 
+
+The disadvantages for #2 is that: 
+(1)	The size of bigram matrixes are much bigger than those in #1, since the types of word are much more than types of character. From all three langauges, the matrix is at least 7000*7000. 
+(2)	Such a model requires smoothing since the bigram is very sparse, otherwise the performance will be lower than 80%. Moreoever, there is out-of-vocabulary words. 
+The advantages for #2 is that: 
+(1)	After smoothing and consideing out-of-vocabulary words, the performance of #2 is better than the performace of #1 
+(2) It can deal with short strings. 
+
+
+Extra Credit Quesiton:
+Since we did not change anything in part #1, let me exclude #1 from this comparasion. Compare to #2 and the extra credit part, the performace of extra credit part is slightly better. 
+
+
