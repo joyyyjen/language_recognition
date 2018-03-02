@@ -1,4 +1,5 @@
 #!/usr/local/bin/python3
+#Author: Joy Jen, netID: yjen2
 import sys
 import codecs
 from string import printable
